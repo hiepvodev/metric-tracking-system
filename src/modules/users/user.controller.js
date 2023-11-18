@@ -1,24 +1,27 @@
-import prisma from "../../database/prisma.js";
+import express from "express";
+import UserService from "./user.services.js";
+import asyncWrapper from "../../utils/wrapper.js";
+import sendResponse from "../../utils/responseSender.js";
+import {
+	ReasonPhrases,
+	StatusCodes,
+} from 'http-status-codes';
 
-const create = async (payload) => {
-  return prisma.user.create({ data: payload });
-};
+const router = express.Router();
 
-const getAll = async () => {
-  return prisma.user.findMany();
-};
+router.get("/", asyncWrapper(async (req, res, next) => {
+  const result = await UserService.getAll();
+  sendResponse(res, StatusCodes.OK, result, ReasonPhrases.OK);
+}));
 
-const getById = (id) => {
-  return prisma.user.findUnique({ where: { id } });
-};
+router.get("/:id", asyncWrapper(async (req, res, next) => {
+  const result = await UserService.getById(req.params.id);
+  sendResponse(res, StatusCodes.OK, result, ReasonPhrases.OK);
+}));
 
-const updateById = async (id, payload) => {
-  return prisma.user.update({ where: { id }, data: payload });
-};
+router.put("/:id", asyncWrapper(async (req, res, next) => {
+  const result = await UserService.updateById(req.params.id, req.body);
+  sendResponse(res, StatusCodes.OK, result, ReasonPhrases.OK);
+}));
 
-export default {
-  create,
-  getAll,
-  getById,
-  updateById,
-};
+export default router;

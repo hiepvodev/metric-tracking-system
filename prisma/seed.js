@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import prisma from "../../database/prisma.js";
 
 export const users = [
   {
@@ -26,8 +26,6 @@ const loadUser = async () => {
   
     console.log('Users inserted in database successfully');
   };
-
-const prisma = new PrismaClient();
 
 async function main() {
   await loadUser();
