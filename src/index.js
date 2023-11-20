@@ -1,10 +1,7 @@
 import express from 'express';
 import indexRouter from './routes/index.js';
-import sendResponse from './utils/responseSender.js';
+import errorHandler from './middleware/errorHandler.js';
 import cors from 'cors';
-import {
-	StatusCodes,
-} from 'http-status-codes';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,12 +14,7 @@ app.use(express.json());
 app.use("/", indexRouter);
 
 // Error Handling middleware
-app.use((err, req, res, next) => {
-    const errMsg = err
-      ? err.toString().split("Error: ")[1]
-      : "Something went wrong";
-    sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, null, errMsg);
-  });
+app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
