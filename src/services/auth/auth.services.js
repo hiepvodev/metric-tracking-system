@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { generateJWT } from "../../utils/jwt.js";
 import userServices from "../users/user.services.js";
 import NotFound from "../../errors/notFound.js";
 import BadRequest from "../../errors/badRequest.js";
@@ -12,7 +13,12 @@ const login = async (email, password) => {
   if (!isMatch) {
     throw new BadRequest("Incorrect password");
   }
-  return user;
+  const tokenPayload = {
+    id: user.id,
+    email: user.email,
+  }
+  const token = generateJWT(tokenPayload);
+  return {user, token};
 };
 
 const register = async (email, password) => {

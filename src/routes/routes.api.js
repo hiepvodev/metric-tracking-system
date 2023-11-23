@@ -9,14 +9,14 @@ import {
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  sendResponse(res, StatusCodes.OK, null, "API Router is working");
+  return sendResponse(res, StatusCodes.OK, null, "API Router is working");
 });
 
 router.use("/users", userController);
 router.use("/auth", authController);
 
 router.all("*", (req, res) => {
-  sendResponse(res, StatusCodes.NOT_FOUND, null, `Can't find ${req.originalUrl} on this server!`);
+  return sendResponse(res, StatusCodes.NOT_FOUND, null, `Can't find ${req.originalUrl} on this server!`);
 });
 
 export default router;
