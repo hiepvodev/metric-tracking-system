@@ -1,4 +1,4 @@
-import { verifyJWT } from "../utils/jwt.js";
+import { verifyJWT, generateJWT } from "../utils/jwt.js";
 import Unauthenticated from "../errors/unauthenticated.js";
 import userService from "../services/users/user.services.js";
 
@@ -22,4 +22,20 @@ const authHandler = async (req, res, next) => {
     next();
 };
 
-export default authHandler;
+const refreshTokenHandler = async (refreshToken) => {
+    // Verify refresh token
+    const { data } = verifyJWT(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    // Check if user exists and if refresh token is valid
+    const user = await userService.findByEmail(data.email);
+    if (!user || user.refreshToken !== refreshToken) {
+        throw new Unauthenticated("Invalid refresh token");
+    }
+    // Generate new tokens
+    const newAccessToken = generateJWT({ id: user.id, email: user.email }, process.env.JWT_SECRET, "15m");
+    const newRefreshToken = generateJWT({ id: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, "7d");
+    // Update refresh token in database
+    await userService.updateById(user.id, { refreshToken: newRefreshToken });
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+};
+
+export { authHandler, refreshTokenHandler };

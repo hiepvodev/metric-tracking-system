@@ -16,6 +16,10 @@ const updateById = async (id, payload) => {
   return prisma.user.update({ where: { id }, data: payload });
 };
 
+const deleteById = async (id) => {
+  return prisma.user.delete({ where: { id } });
+};
+
 const findByEmail = (email) => {
   return prisma.user.findFirst({ where: { email } });
 };
@@ -25,5 +29,6 @@ export default {
   getAll,
   getById,
   updateById,
+  deleteById,
   findByEmail,
 };
