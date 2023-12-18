@@ -19,6 +19,7 @@ const login = async (email, password) => {
   const tokenPayload = {
     id: user.id,
     email: user.email,
+    role: user.role,
   }
   const token = generateJWT(tokenPayload, process.env.JWT_SECRET, "15m");
   const refreshToken = generateJWT(tokenPayload, process.env.REFRESH_TOKEN_SECRET, "7d");

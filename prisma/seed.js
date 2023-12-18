@@ -4,14 +4,17 @@ export const users = [
   {
     name: 'Admin user',
     email: 'dipesh@mailinator.com',
+    role: 'ADMIN',
   },
   {
     name: 'User',
     email: 'subashish@mailinator.com',
+    role: 'USER',
   },
   {
     name: 'Manjul Tamrakar',
     email: 'manjultamrakar4@gmail.com',
+    role: 'ADMIN',
   }
 ];
 
