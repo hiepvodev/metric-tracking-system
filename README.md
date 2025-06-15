@@ -23,6 +23,12 @@
     ```sh
     npm run dev
     ```
+
+4. Config DATABASE_URL in .env and run those command to migrate db and run seed data
+    ```sh
+    npm run migrate
+    npm run seed
+    ```
 4. Open [http://localhost:5000/api/v1/](http://localhost:5000/api/v1/) to view it in the browser.
 
 ## Usage

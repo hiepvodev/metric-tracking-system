@@ -12,7 +12,7 @@ import NotFound from "../../errors/notFound.js";
 const router = express.Router();
 
 // anyone can view all users
-router.get("/", authHandler, async (req, res) => {
+router.get("/", async (req, res) => {
   // Get all users
   const result = await UserService.getAll();
   return sendResponse(res, StatusCodes.OK, result, ReasonPhrases.OK);

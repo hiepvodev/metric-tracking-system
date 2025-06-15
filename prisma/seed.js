@@ -1,20 +1,23 @@
-import prisma from "../../database/prisma.js";
+import prisma from "../src/database/prisma.js";
 
 export const users = [
   {
     name: 'Admin user',
     email: 'dipesh@mailinator.com',
-    role: 'ADMIN',
+    role: ['ADMIN'],
+    password: 'admin123'
   },
   {
     name: 'User',
     email: 'subashish@mailinator.com',
-    role: 'USER',
+    role: ['USER'],
+    password: 'user123'
   },
   {
     name: 'Manjul Tamrakar',
     email: 'manjultamrakar4@gmail.com',
-    role: 'ADMIN',
+    role: ['ADMIN'],
+    password: 'admin123'
   }
 ];
 
