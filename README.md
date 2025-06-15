@@ -32,6 +32,79 @@
 4. Open [http://localhost:5000/api/v1/](http://localhost:5000/api/v1/) to view it in the browser.
 
 ## Usage
+- Use Postman for test the APIs
+
+1. Create a Metric
+POST /metrics
+Request Body (JSON)
+```
+{
+  "userId": 1,
+  "type": "distance",
+  "value": 100,
+  "unit": "m",
+  "date": "2025-06-15T09:00:00Z"
+}
+```
+Response:
+
+```
+{
+  "id": 1,
+  "userId": 1,
+  "type": "distance",
+  "value": 100,
+  "unit": "m",
+  "date": "2025-06-15T09:00:00.000Z"
+}
+
+```
+2. Get Metrics by Type
+GET /metrics
+Query Parameters: userId, type, unit
+
+Example
+GET /metrics?userId=1&type=distance&unit=cm
+
+Response:
+
+```
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "type": "distance",
+    "value": 10000,
+    "unit": "cm",
+    "date": "2025-06-15T09:00:00.000Z"
+  }
+]
+```
+3. Get Metric Chart (Latest Record Per Day)
+GET /metrics/chart
+
+Query Parameters: userId, type, unit, period
+
+Example
+GET /metrics/chart?userId=user_123&type=temperature&period=2m&unit=C
+
+Response:
+```
+[
+  {
+    "date": "2025-05-14T08:00:00.000Z",
+    "value": 36.5,
+    "unit": "C"
+  },
+  {
+    "date": "2025-06-15T09:00:00.000Z",
+    "value": 37.1,
+    "unit": "C"
+  }
+]
+
+```
+
 
 ### Prisma
 
@@ -54,7 +127,3 @@
     ```sh
     npx prisma studio
     ```
-
-### Database ERD
-
-![prisma](https://github.com/Tamrakar182/Express-Prisma-Postgresql/assets/84511488/ca61bee2-8ee1-4d11-b410-2ff7cb6caa42)
