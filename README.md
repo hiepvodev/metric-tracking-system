@@ -1,4 +1,4 @@
-# Simple Express Server configured with Prisma & Postgres
+# Metric tracking system app
 
 ## Getting Started
 
